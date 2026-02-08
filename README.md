@@ -1,3 +1,3 @@
 # safeblock
 
-A new Flutter project.
+Um novo aplicativo de blocos, só para crianças, está para chegar.
