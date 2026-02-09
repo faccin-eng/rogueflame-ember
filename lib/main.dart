@@ -1,12 +1,19 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:safeblock/screens/menu.dart';
+import 'package:safeblock/utils/ember_quest.dart';
 
 void main() {
-  final game = FlameGame();
-  runApp(GameWidget(game: game));
+  runApp(
+    const GameWidget<EmberQuestGame>.controlled(
+      gameFactory: EmberQuestGame.new,
+      ),
+    );
 }
 
+
+
+/*
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
   @override
@@ -17,3 +24,4 @@ class MainApp extends StatelessWidget {
 
 
 }
+*/
