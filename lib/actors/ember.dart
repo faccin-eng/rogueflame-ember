@@ -1,5 +1,5 @@
 import 'package:flame/components.dart';
-import '../utils/ember_quest.dart';
+import '../screens/ember_quest.dart';
 
 class EmberPlayer extends SpriteAnimationComponent with HasGameReference<EmberQuestGame>{
   EmberPlayer({
