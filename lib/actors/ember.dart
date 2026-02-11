@@ -10,7 +10,7 @@ import '../objects/platform_block.dart';
 class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasGameReference<EmberQuestGame>{
   EmberPlayer({
     required super.position,
-  }) : super(size: Vector2.all(64), anchor: Anchor.topLeft);
+  }) : super(size: Vector2.all(64), anchor: Anchor.center);
    int horizontalDirection = 0;
    final Vector2 velocity = Vector2.zero();
    final Vector2 fromAbove = Vector2(0, -1);
@@ -61,7 +61,7 @@ class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasG
       other.removeFromParent();
       game.starsCollected++;
     }
-    if (other is WaterEnemy){
+    if (other is WaterEnemy && !hitByEnemy){
       hit();
     }
     if (other is GroundBlock || other is PlatformBlock){
