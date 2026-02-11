@@ -1,25 +1,26 @@
 
 import 'package:flame/game.dart';
 import 'package:flame/components.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
-import 'package:safeblock/actors/ember.dart';
-import 'package:safeblock/actors/water_enemy.dart';
-import 'package:safeblock/objects/ground_block.dart';
-import 'package:safeblock/objects/platform_block.dart';
-import 'package:safeblock/objects/star.dart';
-import 'package:safeblock/utils/segment_manager.dart';
+import '../actors/ember.dart';
+import '../actors/water_enemy.dart';
+import '../objects/ground_block.dart';
+import '../objects/platform_block.dart';
+import '../objects/star.dart';
+import '../utils/segment_manager.dart';
 
-class EmberQuestGame extends FlameGame {
+class EmberQuestGame extends FlameGame with HasCollisionDetection {
 
   late double lastBlockXPosition = 0.0;
   late UniqueKey lastBlockKey;
 
+  EmberPlayer? ember;
+  double objectSpeed = 0.0;
   @override
   Color backgroundColor(){
     return Colors.lightBlue.shade200;
   }
-  late EmberPlayer _ember;
-  double objectSpeed = 0.0;
 
   void initializeGame(){
     final segmentsToLoad = (size.x / 640).ceil();
@@ -29,9 +30,11 @@ class EmberQuestGame extends FlameGame {
       loadGameSegments(i, (640 *i).toDouble());
     }
 
-    _ember = EmberPlayer(position: Vector2(128, canvasSize.y - 120),);
-    world.add(_ember);
+    ember = EmberPlayer(position: Vector2(128, canvasSize.y - 128),);
+    world.add(ember!);
   }
+
+  
 
   void loadGameSegments(int segmentIndex, double xPositionOffset){
     for (final block in segments[segmentIndex]) {
@@ -65,6 +68,8 @@ class EmberQuestGame extends FlameGame {
     }
   }
 
+ 
+
   @override
   Future<void> onLoad() async{
     await images.loadAll([
@@ -76,6 +81,9 @@ class EmberQuestGame extends FlameGame {
       'star.png',
       'water_enemy.png',
     ]);
+    await FlameAudio.audioCache.load('great_dawn.mp3');
+    FlameAudio.bgm.initialize();
+    FlameAudio.bgm.play('great_dawn.mp3', volume: 0.5);
 
     camera.viewfinder.anchor = Anchor.topLeft;
 

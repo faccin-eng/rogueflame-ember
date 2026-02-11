@@ -1,10 +1,116 @@
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
+import 'package:safeblock/actors/water_enemy.dart';
+import 'package:safeblock/objects/star.dart';
 import '../screens/ember_quest.dart';
+import '../objects/ground_block.dart';
+import '../objects/platform_block.dart';
 
-class EmberPlayer extends SpriteAnimationComponent with HasGameReference<EmberQuestGame>{
+class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasGameReference<EmberQuestGame>{
   EmberPlayer({
     required super.position,
   }) : super(size: Vector2.all(64), anchor: Anchor.topLeft);
+   int horizontalDirection = 0;
+   final Vector2 velocity = Vector2.zero();
+   final Vector2 fromAbove = Vector2(0, -1);
+   final double moveSpeed = 200;
+   bool isOnGround = false;
+
+   bool hasJumped = false;
+   final double gravity = 15;
+   final double jumpSpeed = 600;
+   final double terminalVelocity = 150;
+
+   bool hitByEnemy = false;
+
+  void moveLeft(){
+    horizontalDirection = -1;
+  }
+  void moveRight(){
+    horizontalDirection = 1;
+    print('apertou direito');
+  }
+  void stopMoving(){
+    horizontalDirection = 0;
+  }
+  void jump(){
+    hasJumped = true;
+  }
+
+  void hit(){
+    if (!hitByEnemy) {
+      hitByEnemy = true;
+    }
+    add(
+      OpacityEffect.fadeOut(
+        EffectController(
+          alternate: true,
+          duration: 0.1,
+          repeatCount: 6,
+          ),
+      ),
+    );
+  }
+
+   @override
+  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other){
+    if (other is Star) {
+      other.removeFromParent();
+    }
+    if (other is WaterEnemy){
+      hit();
+    }
+    if (other is GroundBlock || other is PlatformBlock){
+      if (intersectionPoints.length == 2){
+        final mid = (intersectionPoints.elementAt(0) + intersectionPoints.elementAt(1))/2;
+
+        final collisionNormal = absoluteCenter - mid;
+        final separationDistance = (size.x / 2) - collisionNormal.length;
+        collisionNormal.normalize();
+
+        if (fromAbove.dot(collisionNormal) > 0.9){
+          isOnGround = true;
+
+          position += collisionNormal.scaled(separationDistance);
+        }
+      }
+      super.onCollision(intersectionPoints, other);
+    }
+  }
+
+  @override
+  void update(double dt) {
+    velocity.y += gravity;
+    if (hasJumped){
+      if (isOnGround){
+        velocity.y = -jumpSpeed;
+        isOnGround = false;
+      }
+      hasJumped = false;
+    }
+      velocity.y = velocity.y.clamp(-jumpSpeed, terminalVelocity);
+
+    velocity.x = horizontalDirection * moveSpeed;
+    
+    
+    if (horizontalDirection < 0 && scale.x > 0) {
+      flipHorizontally();
+    } else if (horizontalDirection > 0 && scale.x < 0) {
+      flipHorizontally();
+    }
+
+    game.objectSpeed = 0;
+    if (position.x - 36 <= 0 && horizontalDirection < 0){
+      velocity.x = 0;
+    }
+    if (position.x + 64 >= game.size.x / 2 && horizontalDirection > 0) {
+      velocity.x = 0;
+      game.objectSpeed = -moveSpeed;
+    }
+    position += velocity * dt;
+    super.update(dt);
+  }
 
   @override
   void onLoad() {
@@ -16,5 +122,6 @@ class EmberPlayer extends SpriteAnimationComponent with HasGameReference<EmberQu
         textureSize: Vector2.all(16),
         ),
       );
+      add(CircleHitbox());
   }
 }
