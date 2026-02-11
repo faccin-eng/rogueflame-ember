@@ -3,6 +3,7 @@ import 'package:flame/game.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
+import 'package:safeblock/overlays/hud.dart';
 import '../actors/ember.dart';
 import '../actors/water_enemy.dart';
 import '../objects/ground_block.dart';
@@ -17,6 +18,10 @@ class EmberQuestGame extends FlameGame with HasCollisionDetection {
 
   EmberPlayer? ember;
   double objectSpeed = 0.0;
+
+  int starsCollected = 0;
+  int health = 3;
+
   @override
   Color backgroundColor(){
     return Colors.lightBlue.shade200;
@@ -32,6 +37,7 @@ class EmberQuestGame extends FlameGame with HasCollisionDetection {
 
     ember = EmberPlayer(position: Vector2(128, canvasSize.y - 128),);
     world.add(ember!);
+    camera.viewport.add(Hud());
   }
 
   
