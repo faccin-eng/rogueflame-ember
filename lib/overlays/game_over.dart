@@ -1,38 +1,34 @@
 import 'package:flutter/material.dart';
 
-import 'ember_quest.dart';
+import '../screens/ember_quest.dart';
 
-class MainMenu extends StatelessWidget {
-  // Reference to parent game.
+class GameOver extends StatelessWidget{
   final EmberQuestGame game;
-
-  const MainMenu({super.key, required this.game});
+  const GameOver({super.key, required this.game});
 
   @override
-  Widget build(BuildContext context) {
-
-
+  Widget build(BuildContext context){
     return Material(
       color: Colors.transparent,
       child: Center(
         child: Container(
           padding: const EdgeInsets.all(10.0),
-          height: 250,
+          height: 200,
           width: 300,
           decoration: const BoxDecoration(
             color: Colors.black,
             borderRadius: const BorderRadius.all(
-              Radius.circular(20),
+              Radius.circular(20)
             ),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                'Ember Quest',
+                'You Died',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 24,
+                  fontSize: 24
                 ),
               ),
               const SizedBox(height: 40),
@@ -41,30 +37,20 @@ class MainMenu extends StatelessWidget {
                 height: 75,
                 child: ElevatedButton(
                   onPressed: () {
-                    game.overlays.remove('MainMenu');
-                  },
-                  style: ElevatedButton.styleFrom(
+                    game.reset();
+                    game.overlays.remove('GameOver');
+                  }, style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
                   ),
-                  child: const Text(
-                    'Play',
+                   child: const Text(
+                    'Jogar Novamente',
                     style: TextStyle(
-                      fontSize: 40.0,
+                      fontSize: 28.0,
                       color: Colors.black,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              const Text(
-'''Use as setas para mover ou pular.
-Desvie dos inimigos e pegue as estrelas.''',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                ),
-              ),
+                    )
+                   )),
+              )
+
             ],
           ),
         ),

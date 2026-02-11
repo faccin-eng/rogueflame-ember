@@ -47,6 +47,19 @@ class WaterEnemy extends SpriteAnimationComponent with HasGameReference<EmberQue
     velocity.x = game.objectSpeed;
     position += velocity * dt;
     if (position.x < -size.x) removeFromParent();
+    //instead of removing the enemy I'm making them speed up to the sky (it should be just a fast pace)
+    if (game.health <= 0) {
+          add(
+      MoveEffect.to(
+        Vector2(-2 * size.x, 0),
+        EffectController(
+          duration: 3,
+          alternate: true,
+          infinite: true,
+        ),
+        ),
+      );
+    }
     super.update(dt);
   }
 

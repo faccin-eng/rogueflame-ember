@@ -1,6 +1,8 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'package:safeblock/overlays/game_over.dart';
 import 'package:safeblock/screens/ember_quest.dart';
+import 'package:safeblock/screens/menu.dart';
 import 'utils/game_controls.dart';
 
 void main() {
@@ -27,10 +29,14 @@ class _MyAppState extends State<MyApp>{
       home: Scaffold(
         body: Stack(
       children: [
-        IgnorePointer(
-          child: GameWidget(game: _game),
-            ),
-        
+        GameWidget(
+          game: _game,
+          overlayBuilderMap: {
+            'MainMenu': (_, game) => MainMenu(game: game as EmberQuestGame),
+            'GameOver': (_, game) => GameOver(game: game as EmberQuestGame),
+          },
+          initialActiveOverlays: const ['MainMenu'],
+          ),
         GameControls(
           onLeftPressed: () => _game.ember?.moveLeft(),
           onLeftReleased: () => _game.ember?.stopMoving(),

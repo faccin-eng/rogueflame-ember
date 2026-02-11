@@ -112,6 +112,15 @@ class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasG
       velocity.x = 0;
       game.objectSpeed = -moveSpeed;
     }
+
+    if (position.y > game.size.y + size.y){
+      game.health = 0;
+    }
+
+    if (game.health <= 0){
+      removeFromParent();
+    }
+
     position += velocity * dt;
     super.update(dt);
   }

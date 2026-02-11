@@ -27,7 +27,7 @@ class EmberQuestGame extends FlameGame with HasCollisionDetection {
     return Colors.lightBlue.shade200;
   }
 
-  void initializeGame(){
+  void initializeGame(bool loadHud){
     final segmentsToLoad = (size.x / 640).ceil();
     segmentsToLoad.clamp(0, segments.length);
 
@@ -40,7 +40,11 @@ class EmberQuestGame extends FlameGame with HasCollisionDetection {
     camera.viewport.add(Hud());
   }
 
-  
+  void reset(){
+    starsCollected = 0;
+    health = 3;
+    initializeGame(false);
+  }
 
   void loadGameSegments(int segmentIndex, double xPositionOffset){
     for (final block in segments[segmentIndex]) {
@@ -93,6 +97,14 @@ class EmberQuestGame extends FlameGame with HasCollisionDetection {
 
     camera.viewfinder.anchor = Anchor.topLeft;
 
-    initializeGame();
+    initializeGame(true);
+  }
+
+  @override
+  void update(double dt){
+    if (health <= 0){
+      overlays.add('GameOver');
+    }
+    super.update(dt);
   }
 }
