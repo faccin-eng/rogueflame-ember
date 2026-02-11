@@ -13,8 +13,8 @@ class GameOver extends StatelessWidget{
       child: Center(
         child: Container(
           padding: const EdgeInsets.all(10.0),
-          height: 200,
-          width: 300,
+          height: 300,
+          width: 400,
           decoration: const BoxDecoration(
             color: Colors.black,
             borderRadius: const BorderRadius.all(
@@ -27,8 +27,9 @@ class GameOver extends StatelessWidget{
               const Text(
                 'You Died',
                 style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24
+                  color: Colors.red,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 40),
@@ -43,9 +44,9 @@ class GameOver extends StatelessWidget{
                     backgroundColor: Colors.white,
                   ),
                    child: const Text(
-                    'Jogar Novamente',
+                    'Jogar de novo',
                     style: TextStyle(
-                      fontSize: 28.0,
+                      fontSize: 22.0,
                       color: Colors.black,
                     )
                    )),

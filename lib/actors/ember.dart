@@ -18,7 +18,7 @@ class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasG
    bool isOnGround = false;
 
    bool hasJumped = false;
-   final double gravity = 15;
+   final double gravity = 16;
    final double jumpSpeed = 600;
    final double terminalVelocity = 150;
 
@@ -29,7 +29,6 @@ class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasG
   }
   void moveRight(){
     horizontalDirection = 1;
-    print('apertou direito');
   }
   void stopMoving(){
     horizontalDirection = 0;
@@ -56,7 +55,7 @@ class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasG
     );
   }
 
-   @override
+  @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other){
     if (other is Star) {
       other.removeFromParent();
@@ -76,11 +75,11 @@ class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasG
         if (fromAbove.dot(collisionNormal) > 0.9){
           isOnGround = true;
 
-          position += collisionNormal.scaled(separationDistance);
         }
+        position += collisionNormal.scaled(separationDistance);
       }
-      super.onCollision(intersectionPoints, other);
     }
+    super.onCollision(intersectionPoints, other);
   }
 
   @override
@@ -135,6 +134,8 @@ class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasG
         textureSize: Vector2.all(16),
         ),
       );
-      add(CircleHitbox());
+      add(CircleHitbox(
+        collisionType: CollisionType.active
+      ));
   }
 }

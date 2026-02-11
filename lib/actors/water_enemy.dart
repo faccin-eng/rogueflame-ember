@@ -1,10 +1,10 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
-
+import 'package:safeblock/objects/platform_block.dart';
 import '../screens/ember_quest.dart';
 
-class WaterEnemy extends SpriteAnimationComponent with HasGameReference<EmberQuestGame>{
+class WaterEnemy extends SpriteAnimationComponent with CollisionCallbacks, HasGameReference<EmberQuestGame>{
   final Vector2 gridPosition;
   double xOffset;
 
@@ -29,7 +29,7 @@ class WaterEnemy extends SpriteAnimationComponent with HasGameReference<EmberQue
       (gridPosition.x * size.x) + xOffset,
       game.size.y - (gridPosition.y * size.y),
     );
-    add(RectangleHitbox(collisionType: CollisionType.passive));
+    add(RectangleHitbox(collisionType: CollisionType.active));
     add(
       MoveEffect.by(
         Vector2(-2 * size.x, 0),
@@ -40,6 +40,22 @@ class WaterEnemy extends SpriteAnimationComponent with HasGameReference<EmberQue
         ),
       ),
     );
+  }
+
+  
+  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other){
+    if (other is PlatformBlock){
+      if (intersectionPoints.length == 2){
+        final mid = (intersectionPoints.elementAt(0) + intersectionPoints.elementAt(1))/2;
+
+        final collisionNormal = absoluteCenter - mid;
+        final separationDistance = (size.x / 2) - collisionNormal.length;
+        collisionNormal.normalize();
+
+        position += collisionNormal.scaled(separationDistance);
+      }
+    }
+    super.onCollision(intersectionPoints, other);
   }
 
   @override

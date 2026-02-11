@@ -17,7 +17,7 @@ class MainMenu extends StatelessWidget {
       child: Center(
         child: Container(
           padding: const EdgeInsets.all(10.0),
-          height: 250,
+          height: 400,
           width: 300,
           decoration: const BoxDecoration(
             color: Colors.black,
