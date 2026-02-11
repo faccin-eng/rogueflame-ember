@@ -10,6 +10,10 @@ import 'package:safeblock/objects/star.dart';
 import 'package:safeblock/utils/segment_manager.dart';
 
 class EmberQuestGame extends FlameGame {
+
+  late double lastBlockXPosition = 0.0;
+  late UniqueKey lastBlockKey;
+
   @override
   Color backgroundColor(){
     return Colors.lightBlue.shade200;
@@ -33,13 +37,30 @@ class EmberQuestGame extends FlameGame {
     for (final block in segments[segmentIndex]) {
       switch (block.blockType){
         case GroundBlock:
+          add(GroundBlock(gridPosition: block.gridPosition, 
+            xOffset: xPositionOffset,
+            ),
+          );
         case PlatformBlock:
           add(PlatformBlock(
             gridPosition: block.gridPosition, 
-            xOffset: xPositionOffset
-            ));
+            xOffset: xPositionOffset,
+            ),
+          );
         case Star:
+          world.add(
+            Star(
+              gridPosition: block.gridPosition, 
+              xOffset: xPositionOffset,
+            ),
+          );
         case WaterEnemy:
+        world.add(
+          WaterEnemy(
+            gridPosition: block.gridPosition, 
+            xOffset: xPositionOffset,
+          ),
+        );
       }
     }
   }

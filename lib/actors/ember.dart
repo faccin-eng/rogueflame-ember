@@ -4,7 +4,7 @@ import '../screens/ember_quest.dart';
 class EmberPlayer extends SpriteAnimationComponent with HasGameReference<EmberQuestGame>{
   EmberPlayer({
     required super.position,
-  }) : super(size: Vector2.all(64), anchor: Anchor.center);
+  }) : super(size: Vector2.all(64), anchor: Anchor.topLeft);
 
   @override
   void onLoad() {
