@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
-
+import '../main.dart';
 import 'ember_quest.dart';
 
 class MainMenu extends StatelessWidget {
-  // Reference to parent game.
-  final EmberQuestGame game;
 
-  const MainMenu({super.key, required this.game});
+  final EmberQuestGame game;
+  final bool mostrarBotoes;
+  final ValueChanged<bool> onMostrarBotoesChanged;
+
+  const MainMenu({super.key, 
+  required this.game,
+  required this.mostrarBotoes,
+  required this.onMostrarBotoesChanged,
+  });
+
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +24,19 @@ class MainMenu extends StatelessWidget {
       child: Center(
         child: Container(
           padding: const EdgeInsets.all(10.0),
-          height: 400,
+          height: 350,
           width: 300,
           decoration: const BoxDecoration(
-            color: Colors.black,
-            borderRadius: const BorderRadius.all(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors:  [
+              Color.fromARGB(230, 180, 30, 0),    
+              Color.fromARGB(220, 220, 80, 0),    
+              Color.fromARGB(210, 255, 140, 0),   
+              Color.fromARGB(190, 255, 200, 50), 
+            ]),
+            borderRadius: BorderRadius.all(
               Radius.circular(20),
             ),
           ),
@@ -33,38 +48,36 @@ class MainMenu extends StatelessWidget {
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 40),
               SizedBox(
-                width: 200,
-                height: 75,
+                width: 150,
+                height: 65,
                 child: ElevatedButton(
                   onPressed: () {
                     game.overlays.remove('MainMenu');
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
+                    backgroundColor: const Color.fromARGB(148, 2, 62, 167),
                   ),
                   child: const Text(
-                    'Play',
+                    'Jogar',
                     style: TextStyle(
-                      fontSize: 40.0,
-                      color: Colors.black,
+                      fontSize: 32.0,
+                      color: Colors.amber,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
               ),
               const SizedBox(height: 20),
-              const Text(
-'''Use as setas para mover ou pular.
-Desvie dos inimigos e pegue as estrelas.''',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
+              SwitchListTile(
+                title: Text("Botões na tela"),
+                value: mostrarBotoes,
+                onChanged: onMostrarBotoesChanged,
                 ),
-              ),
             ],
           ),
         ),

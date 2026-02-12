@@ -29,8 +29,8 @@ class GameControls extends StatelessWidget {
             onTapUp: (_) => onLeftReleased(),
             onTapCancel: onLeftReleased,
             child: Container(
-              width: 60,
-              height: 60,
+              width: 70,
+              height: 70,
               decoration: BoxDecoration(
                 color: Colors.white38,
                 shape: BoxShape.circle,
@@ -48,8 +48,8 @@ class GameControls extends StatelessWidget {
             onTapUp: (_) => onRightReleased(),
             onTapCancel: onRightReleased,
             child: Container(
-              width: 60,
-              height: 60,
+              width: 70,
+              height: 70,
               decoration: BoxDecoration(
                 color: Colors.white38,
                 shape: BoxShape.circle,
@@ -61,12 +61,12 @@ class GameControls extends StatelessWidget {
         // Botão pular
         Positioned(
           bottom: 40,
-          right: 20,
+          right: 50,
           child: GestureDetector(
             onTap: onJump,
             child: Container(
-              width: 60,
-              height: 60,
+              width: 70,
+              height: 70,
               decoration: BoxDecoration(
                 color: Colors.white38,
                 shape: BoxShape.circle,

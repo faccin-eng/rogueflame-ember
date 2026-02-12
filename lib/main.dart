@@ -24,6 +24,7 @@ class MyApp extends StatefulWidget{
 
 class _MyAppState extends State<MyApp>{
   late final EmberQuestGame _game;
+  bool mostrarBotoes = true;
   @override
   void initState(){
     super.initState();
@@ -38,11 +39,19 @@ class _MyAppState extends State<MyApp>{
         GameWidget(
           game: _game,
           overlayBuilderMap: {
-            'MainMenu': (_, game) => MainMenu(game: game as EmberQuestGame),
+            'MainMenu': (_, game) => MainMenu(
+              game: game as EmberQuestGame,
+            mostrarBotoes: mostrarBotoes,
+            onMostrarBotoesChanged: (valor){
+              setState(() {
+                mostrarBotoes = valor;
+              });
+            }),
             'GameOver': (_, game) => GameOver(game: game as EmberQuestGame),
           },
           initialActiveOverlays: const ['MainMenu'],
           ),
+        if (mostrarBotoes) 
         GameControls(
           onLeftPressed: () => _game.ember?.moveLeft(),
           onLeftReleased: () => _game.ember?.stopMoving(),
