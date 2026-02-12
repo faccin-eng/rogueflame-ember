@@ -1,4 +1,5 @@
 
+import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
@@ -38,6 +39,12 @@ class EmberQuestGame extends FlameGame with HasCollisionDetection {
 
     ember = EmberPlayer(position: Vector2(128, canvasSize.y - 128),);
     world.add(ember!);
+    camera.follow(ember!, verticalOnly: true, snap: true);
+    camera.viewfinder.anchor = Anchor(0.16, 0.5);
+    camera.setBounds(
+      Rectangle.fromLTRB(0, 194, double.infinity, 0),
+    );
+    
     camera.viewport.add(Hud());
   }
 
@@ -51,17 +58,17 @@ class EmberQuestGame extends FlameGame with HasCollisionDetection {
     for (final block in segments[segmentIndex]) {
       switch (block.blockType){
         case GroundBlock:
-          add(GroundBlock(gridPosition: block.gridPosition, 
+          world.add(GroundBlock(gridPosition: block.gridPosition, 
             xOffset: xPositionOffset,
             ),
           );
         case River:
-          add(River(gridPosition: block.gridPosition, 
+          world.add(River(gridPosition: block.gridPosition, 
             xOffset: xPositionOffset,
             ),
           );
         case PlatformBlock:
-          add(PlatformBlock(
+          world.add(PlatformBlock(
             gridPosition: block.gridPosition, 
             xOffset: xPositionOffset,
             ),
@@ -107,7 +114,7 @@ class EmberQuestGame extends FlameGame with HasCollisionDetection {
     FlameAudio.bgm.initialize();
     FlameAudio.bgm.play('great_dawn.mp3', volume: 0.5);
 
-    camera.viewfinder.anchor = Anchor.topLeft;
+
 
     initializeGame(true);
   }

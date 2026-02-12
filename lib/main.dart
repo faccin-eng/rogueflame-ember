@@ -1,11 +1,17 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:safeblock/overlays/game_over.dart';
 import 'package:safeblock/screens/ember_quest.dart';
 import 'package:safeblock/screens/menu.dart';
 import 'utils/game_controls.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.landscapeLeft,
+    DeviceOrientation.landscapeRight,
+  ]);
   runApp(const MyApp());
 }
 
