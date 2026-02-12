@@ -24,12 +24,12 @@ class HeartHealthComponent extends SpriteGroupComponent<HeartState> with HasGame
     await super.onLoad();
     final availableSprite = await game.loadSprite(
       'heart.png',
-      srcSize: Vector2.all(32),
+      srcSize: Vector2.all(24),
     );
 
     final unavailableSprite = await game.loadSprite(
       'heart_half.png',
-      srcSize: Vector2.all(32),
+      srcSize: Vector2.all(24),
     );
 
     sprites = {

@@ -32,12 +32,12 @@ class Hud extends PositionComponent with HasGameReference<EmberQuestGame> {
     );
     add(_scoreTextComponent);
 
-    final starSprite = await game.loadSprite('star.png');
+    final starSprite = await game.loadSprite('coin.png');
     add(
       SpriteComponent(
         sprite: starSprite,
         position: Vector2(game.size.x - 100, 20),
-        size: Vector2.all(32),
+        size: Vector2.all(48),
         anchor: Anchor.center,
       ),
     );
@@ -48,7 +48,7 @@ class Hud extends PositionComponent with HasGameReference<EmberQuestGame> {
         HeartHealthComponent(
           heartNumber: i,
           position: Vector2(positionX.toDouble(), 20),
-          size: Vector2.all(32),
+          size: Vector2.all(48),
         ),
       );
     }

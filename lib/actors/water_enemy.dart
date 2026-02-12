@@ -18,11 +18,12 @@ class WaterEnemy extends SpriteAnimationComponent with CollisionCallbacks, HasGa
   @override
   void onLoad() {
     animation = SpriteAnimation.fromFrameData(
-      game.images.fromCache('water_enemy.png'),
+      game.images.fromCache('monster.png'),
       SpriteAnimationData.sequenced(
-        amount: 2, 
+        amount: 9, 
         stepTime: 0.70,
-        textureSize: Vector2.all(16),
+        textureSize: Vector2.all(48),
+        amountPerRow: 3,
       ),
     );
         position = Vector2(
@@ -42,7 +43,7 @@ class WaterEnemy extends SpriteAnimationComponent with CollisionCallbacks, HasGa
     );
   }
 
-  
+  @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other){
     if (other is PlatformBlock){
       if (intersectionPoints.length == 2){

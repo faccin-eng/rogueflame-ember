@@ -43,7 +43,7 @@ class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasG
     if (!hitByEnemy) {
       game.health--;
       hitByEnemy = true;
-      FlameAudio.play('hit.wav');
+      FlameAudio.play('hit.wav', volume: 0.4);
     }
     add(
       OpacityEffect.fadeOut(
@@ -63,7 +63,7 @@ class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasG
     if (other is Star) {
       other.removeFromParent();
       game.starsCollected++;
-      FlameAudio.play('star.wav');
+      FlameAudio.play('star.wav', volume: 0.4);
     }
     if (other is WaterEnemy && !hitByEnemy){
       hit();

@@ -89,7 +89,8 @@ class EmberQuestGame extends FlameGame with HasCollisionDetection {
       'heart_half.png',
       'heart.png',
       'star.png',
-      'water_enemy.png',
+      'coin.png',
+      'monster.png',
     ]);
     await FlameAudio.audioCache.load('great_dawn.mp3');
     await FlameAudio.audioCache.load('hit.wav');
