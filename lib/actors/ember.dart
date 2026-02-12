@@ -1,6 +1,7 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:safeblock/actors/water_enemy.dart';
 import 'package:safeblock/objects/star.dart';
 import '../screens/ember_quest.dart';
@@ -35,12 +36,14 @@ class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasG
   }
   void jump(){
     hasJumped = true;
+    
   }
 
   void hit(){
     if (!hitByEnemy) {
       game.health--;
       hitByEnemy = true;
+      FlameAudio.play('hit.wav');
     }
     add(
       OpacityEffect.fadeOut(
@@ -60,6 +63,7 @@ class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasG
     if (other is Star) {
       other.removeFromParent();
       game.starsCollected++;
+      FlameAudio.play('star.wav');
     }
     if (other is WaterEnemy && !hitByEnemy){
       hit();
@@ -89,6 +93,7 @@ class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasG
       if (isOnGround){
         velocity.y = -jumpSpeed;
         isOnGround = false;
+        FlameAudio.play('jump.wav');
       }
       hasJumped = false;
     }
