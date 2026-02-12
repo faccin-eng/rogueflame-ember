@@ -42,7 +42,7 @@ class EmberQuestGame extends FlameGame with HasCollisionDetection {
     camera.follow(ember!, verticalOnly: true, snap: true);
     camera.viewfinder.anchor = Anchor(0.16, 0.5);
     camera.setBounds(
-      Rectangle.fromLTRB(0, 194, double.infinity, 0),
+      Rectangle.fromLTRB(0, -(canvasSize.y * 0.5), double.infinity, canvasSize.y * 0.5),
     );
     
     camera.viewport.add(Hud());

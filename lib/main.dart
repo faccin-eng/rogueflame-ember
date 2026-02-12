@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:safeblock/overlays/game_over.dart';
 import 'package:safeblock/screens/ember_quest.dart';
 import 'package:safeblock/screens/menu.dart';
+import 'package:safeblock/utils/gest_controls.dart';
 import 'utils/game_controls.dart';
 
 void main() async{
@@ -54,6 +55,14 @@ class _MyAppState extends State<MyApp>{
         if (mostrarBotoes) 
         GameControls(
           onLeftPressed: () => _game.ember?.moveLeft(),
+          onLeftReleased: () => _game.ember?.stopMoving(),
+          onRightPressed: () => _game.ember?.moveRight(),
+          onRightReleased: () => _game.ember?.stopMoving(),
+          onJump: () => _game.ember?.jump(),
+        ),
+        if (!mostrarBotoes) 
+        GestControls(
+          onLeftPressed: () => _game.ember?.moveLeft(), 
           onLeftReleased: () => _game.ember?.stopMoving(),
           onRightPressed: () => _game.ember?.moveRight(),
           onRightReleased: () => _game.ember?.stopMoving(),
