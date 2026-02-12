@@ -3,6 +3,7 @@ import 'package:flame/game.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
+import 'package:safeblock/objects/river.dart';
 import 'package:safeblock/overlays/hud.dart';
 import '../actors/ember.dart';
 import '../actors/water_enemy.dart';
@@ -54,6 +55,11 @@ class EmberQuestGame extends FlameGame with HasCollisionDetection {
             xOffset: xPositionOffset,
             ),
           );
+        case River:
+          add(River(gridPosition: block.gridPosition, 
+            xOffset: xPositionOffset,
+            ),
+          );
         case PlatformBlock:
           add(PlatformBlock(
             gridPosition: block.gridPosition, 
@@ -89,6 +95,7 @@ class EmberQuestGame extends FlameGame with HasCollisionDetection {
       'heart_half.png',
       'heart.png',
       'star.png',
+      'river.png',
       'coin.png',
       'monster.png',
     ]);

@@ -4,6 +4,7 @@ import '../actors/water_enemy.dart';
 import '../objects/ground_block.dart';
 import '../objects/platform_block.dart';
 import '../objects/star.dart';
+import '../objects/river.dart';
 
 class Block {
   final Vector2 gridPosition;
@@ -44,6 +45,12 @@ final segment1 = [
   Block(Vector2(1, 1), PlatformBlock),
   Block(Vector2(1, 2), PlatformBlock),
   Block(Vector2(1, 3), PlatformBlock),
+  Block(Vector2(2, 0), River),
+  Block(Vector2(3, 0), River),
+  Block(Vector2(4, 0), River),
+  Block(Vector2(5, 0), River),
+  Block(Vector2(6, 0), River),
+  Block(Vector2(7, 0), River),
   Block(Vector2(2, 6), PlatformBlock),
   Block(Vector2(3, 6), PlatformBlock),
   Block(Vector2(6, 5), PlatformBlock),

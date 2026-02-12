@@ -31,17 +31,7 @@ class Star extends SpriteAnimationComponent with HasGameReference<EmberQuestGame
       (gridPosition.x * size.x) + xOffset +(size.x / 2), game.size.y - (gridPosition.y * size.y) - (size.y / 2),
     );
     add(CircleHitbox(collisionType: CollisionType.passive));
-    // add(
-    //   SizeEffect.by(
-    //     Vector2(-24, -24),
-    //     EffectController(
-    //       duration: .75,
-    //       reverseDuration: .5,
-    //       infinite: true,
-    //       curve: Curves.easeOut,
-    //     ),
-    //   ),
-    // );
+ 
   }
 
   @override

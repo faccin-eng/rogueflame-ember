@@ -3,6 +3,8 @@ import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:safeblock/actors/water_enemy.dart';
+import 'package:safeblock/effects/splash_effect.dart';
+import 'package:safeblock/objects/river.dart';
 import 'package:safeblock/objects/star.dart';
 import '../screens/ember_quest.dart';
 import '../objects/ground_block.dart';
@@ -68,6 +70,10 @@ class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasG
     if (other is WaterEnemy && !hitByEnemy){
       hit();
     }
+    if (other is River){
+      hit();
+      game.world.add(SplashEffect(position: position.clone()));
+    }
     if (other is GroundBlock || other is PlatformBlock){
       if (intersectionPoints.length == 2){
         final mid = (intersectionPoints.elementAt(0) + intersectionPoints.elementAt(1))/2;
@@ -119,6 +125,7 @@ class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasG
 
     if (position.y > game.size.y + size.y){
       game.health = 0;
+      
     }
 
     if (game.health <= 0){
