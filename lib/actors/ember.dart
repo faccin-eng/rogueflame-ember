@@ -21,7 +21,7 @@ class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasG
    bool isOnGround = false;
 
    bool hasJumped = false;
-   final double gravity = 16;
+   final double gravity = 960;
    final double jumpSpeed = 600;
    final double terminalVelocity = 150;
 
@@ -94,7 +94,7 @@ class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasG
 
   @override
   void update(double dt) {
-    velocity.y += gravity;
+    velocity.y += gravity * dt;
     if (hasJumped){
       if (isOnGround){
         velocity.y = -jumpSpeed;
