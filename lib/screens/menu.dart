@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:rogueflame/screens/game_screen.dart';
-import 'ember_quest.dart';
 
 class MainMenu extends StatefulWidget {
   const MainMenu({super.key});

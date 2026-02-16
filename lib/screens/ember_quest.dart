@@ -2,6 +2,7 @@
 import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
 import 'package:flame/components.dart';
+import 'package:flame/parallax.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:rogueflame/objects/river.dart';
@@ -24,10 +25,7 @@ class EmberQuestGame extends FlameGame with HasCollisionDetection {
   int starsCollected = 0;
   int health = 3;
 
-  @override
-  Color backgroundColor(){
-    return Colors.lightBlue.shade200;
-  }
+  ParallaxComponent? parallaxBackground;
 
   void initializeGame(bool loadHud){
     final segmentsToLoad = (size.x / 640).ceil();
@@ -95,6 +93,24 @@ class EmberQuestGame extends FlameGame with HasCollisionDetection {
 
   @override
   Future<void> onLoad() async{
+     parallaxBackground = await loadParallaxComponent(
+      [
+        ParallaxImageData('parallax/8.png'),
+        ParallaxImageData('parallax/7.png'),
+        ParallaxImageData('parallax/6.png'),
+        ParallaxImageData('parallax/5.png'),
+        ParallaxImageData('parallax/4.png'),
+        ParallaxImageData('parallax/3.png'),
+        ParallaxImageData('parallax/2.png'),
+        ParallaxImageData('parallax/1.png'),
+      ],
+      baseVelocity: Vector2(0.1, 0),
+      velocityMultiplierDelta: Vector2(1.1, 0),
+      fill: LayerFill.height,
+      alignment: Alignment.bottomCenter,
+    );
+    camera.backdrop.add(parallaxBackground!);
+
     await images.loadAll([
       'block.png',
       'ember.png',
@@ -123,6 +139,11 @@ class EmberQuestGame extends FlameGame with HasCollisionDetection {
   void update(double dt){
     if (health <= 0){
       overlays.add('GameOver');
+    }
+    if (parallaxBackground != null && ember != null){
+    parallaxBackground?.parallax?.baseVelocity = Vector2(-objectSpeed * 0.3, 0);
+    final cameraY = camera.viewfinder.position.y;
+    parallaxBackground!.position.y = -cameraY * 0.029;
     }
     super.update(dt);
   }
