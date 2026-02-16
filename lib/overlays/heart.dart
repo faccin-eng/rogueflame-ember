@@ -1,4 +1,4 @@
-import 'package:safeblock/screens/ember_quest.dart';
+import 'package:rogueflame/screens/ember_quest.dart';
 import 'package:flame/components.dart';
 
 enum HeartState {

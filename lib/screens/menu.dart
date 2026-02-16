@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
-import '../main.dart';
+import 'package:rogueflame/screens/game_screen.dart';
 import 'ember_quest.dart';
 
-class MainMenu extends StatelessWidget {
+class MainMenu extends StatefulWidget {
+  const MainMenu({super.key});
 
-  final EmberQuestGame game;
-  final bool mostrarBotoes;
-  final ValueChanged<bool> onMostrarBotoesChanged;
+  @override
+  State<MainMenu> createState() => _MainMenuState();
+  }
 
-  const MainMenu({super.key, 
-  required this.game,
-  required this.mostrarBotoes,
-  required this.onMostrarBotoesChanged,
-  });
+  class _MainMenuState extends State<MainMenu>{
+  bool mostrarBotoes = true;
 
 
   @override
@@ -57,7 +55,13 @@ class MainMenu extends StatelessWidget {
                 height: 65,
                 child: ElevatedButton(
                   onPressed: () {
-                    game.overlays.remove('MainMenu');
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => GameScreen(mostrarBotoes: mostrarBotoes),
+                        ),
+                      );
+
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(148, 2, 62, 167),
@@ -74,9 +78,11 @@ class MainMenu extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               SwitchListTile(
-                title: Text("Botões na tela"),
+                title: const Text("Botões na tela"),
                 value: mostrarBotoes,
-                onChanged: onMostrarBotoesChanged,
+                onChanged: (valor) {
+                  mostrarBotoes = valor;
+                },
                 ),
             ],
           ),

@@ -4,10 +4,15 @@ import '../screens/ember_quest.dart';
 
 class GameOver extends StatelessWidget{
   final EmberQuestGame game;
-  const GameOver({super.key, required this.game});
+  final VoidCallback onVoltarMenu;
+  const GameOver({super.key, 
+  required this.game,
+  required this.onVoltarMenu,
+  });
 
   @override
   Widget build(BuildContext context){
+    // WidgetsBinding.instance.addPostFrameCallback((_) => onGameOver());
     return Material(
       color: Colors.transparent,
       child: Center(
