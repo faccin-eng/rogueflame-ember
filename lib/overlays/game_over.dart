@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rogueflame/screens/menu.dart';
 
 import '../screens/ember_quest.dart';
 
@@ -45,6 +46,7 @@ class GameOver extends StatelessWidget{
                   onPressed: () {
                     game.reset();
                     game.overlays.remove('GameOver');
+                    onVoltarMenu();
                   }, style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
                   ),
@@ -55,7 +57,33 @@ class GameOver extends StatelessWidget{
                       color: Colors.black,
                     )
                    )),
-              )
+              ),
+              const SizedBox(height: 20),
+                SizedBox(
+                  width: 200,
+                  height: 75,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      game.overlays.remove('GameOver');
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const MainMenu(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                    ),
+                    child: const Text(
+                      'Menu',
+                      style: TextStyle(
+                        fontSize: 22.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
 
             ],
           ),

@@ -18,11 +18,23 @@ class GameScreen extends StatefulWidget {
 class _GameScreenState extends State<GameScreen>{
   late final EmberQuestGame _game;
   bool gameOver = false;
+  VoidCallback? onGameOver;
 
   @override
   void initState(){
     super.initState();
     _game = EmberQuestGame();
+    _game.onGameOver = () {
+      setState(() {
+        gameOver = true;
+      });
+    };
+  }
+
+  @override
+  void dispose() {
+    _game.onGameOver = null;
+    super.dispose();
   }
 
   @override
@@ -36,12 +48,9 @@ class _GameScreenState extends State<GameScreen>{
               'GameOver': (_, game) => GameOver(
                 game: game as EmberQuestGame,
                 onVoltarMenu: (){
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const MainMenu(),
-                      ),
-                    );
+                  setState(() {
+                    gameOver = false;
+                  });
                 },
               ),
             },

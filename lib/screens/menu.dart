@@ -80,7 +80,9 @@ class MainMenu extends StatefulWidget {
                 title: const Text("Botões na tela"),
                 value: mostrarBotoes,
                 onChanged: (valor) {
+                  setState(() {
                   mostrarBotoes = valor;
+                  });
                 },
                 ),
             ],

@@ -25,6 +25,8 @@ class EmberQuestGame extends FlameGame with HasCollisionDetection {
   int starsCollected = 0;
   int health = 3;
 
+  VoidCallback? onGameOver;
+
   ParallaxComponent? parallaxBackground;
 
   void initializeGame(bool loadHud){
@@ -137,8 +139,12 @@ class EmberQuestGame extends FlameGame with HasCollisionDetection {
 
   @override
   void update(double dt){
-    if (health <= 0){
+    if (health <= 0 && !overlays.isActive('GameOver')){
       overlays.add('GameOver');
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+      onGameOver?.call();
+    });
+      return;
     }
     if (parallaxBackground != null && ember != null){
     parallaxBackground?.parallax?.baseVelocity = Vector2(-objectSpeed * 0.3, 0);
