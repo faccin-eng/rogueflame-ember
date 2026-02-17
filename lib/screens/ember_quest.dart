@@ -29,6 +29,7 @@ class EmberQuestGame extends FlameGame with HasCollisionDetection {
   VoidCallback? onGameOver;
 
   ParallaxComponent? parallaxBackground;
+  bool swordSpawned = false;
 
   void initializeGame(bool loadHud){
     final segmentsToLoad = (size.x / 640).ceil();
@@ -52,6 +53,7 @@ class EmberQuestGame extends FlameGame with HasCollisionDetection {
   void reset(){
     starsCollected = 0;
     health = 3;
+    swordSpawned = false;
     initializeGame(false);
   }
 
@@ -82,12 +84,14 @@ class EmberQuestGame extends FlameGame with HasCollisionDetection {
             ),
           );
         case Sword:
-          world.add(
+         if (!swordSpawned) { world.add(
             Sword(
               gridPosition: block.gridPosition, 
               xOffset: xPositionOffset,
             ),
           );
+          swordSpawned = true;
+          }
         case WaterEnemy:
         world.add(
           WaterEnemy(

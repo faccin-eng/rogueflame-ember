@@ -80,9 +80,9 @@ class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasG
           loop: false,
           ),
         ),
-        size: Vector2.all(108),
+        size: Vector2(140, 108),
         anchor: Anchor.center,
-        position: Vector2(32, 32),
+        position: Vector2(48, 32),
         removeOnFinish: true, //really? maybe not
     );
     add(swordAnim);
