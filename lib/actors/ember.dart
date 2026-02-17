@@ -28,6 +28,9 @@ class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasG
 
    bool hitByEnemy = false;
 
+   bool hasSword = false;
+   bool isAttacking = false;
+
   void moveLeft(){
     horizontalDirection = -1;
   }
@@ -39,6 +42,7 @@ class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasG
   }
   void jump(){
     hasJumped = true;
+    attack();
     
   }
 
@@ -61,6 +65,33 @@ class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasG
     );
   }
 
+  void attack(){
+    if (!hasSword || isAttacking) return;
+    isAttacking = true;
+
+    final swordAnim = SpriteAnimationComponent(
+      animation: SpriteAnimation.fromFrameData(
+        game.images.fromCache('swording.png'),
+        SpriteAnimationData.sequenced(
+          amount: 8,
+          stepTime: 0.12,
+          textureSize: Vector2.all(32),
+          amountPerRow: 4,
+          loop: false,
+          ),
+        ),
+        size: Vector2.all(108),
+        anchor: Anchor.center,
+        position: Vector2(32, 32),
+        removeOnFinish: true, //really? maybe not
+    );
+    add(swordAnim);
+    Future.delayed(const Duration(milliseconds: 960), () {
+      isAttacking = false;
+    });
+    
+  }
+
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other){
     if (other is Star) {
@@ -70,6 +101,7 @@ class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasG
     }
     if (other is Sword) {
       other.removeFromParent();
+      hasSword = true;
       FlameAudio.play('star.wav', volume: 0.7);
     }
     if (other is WaterEnemy && !hitByEnemy){
