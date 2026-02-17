@@ -41,7 +41,7 @@ class MainMenu extends StatefulWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                'Ember Quest',
+                'Rogueflame',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,

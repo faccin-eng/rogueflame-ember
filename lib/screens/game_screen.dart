@@ -2,7 +2,6 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:rogueflame/overlays/game_over.dart';
 import 'package:rogueflame/screens/ember_quest.dart';
-import 'package:rogueflame/screens/menu.dart';
 import 'package:rogueflame/utils/gest_controls.dart';
 import 'package:rogueflame/utils/game_controls.dart';
 

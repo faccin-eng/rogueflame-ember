@@ -6,6 +6,7 @@ import 'package:rogueflame/actors/water_enemy.dart';
 import 'package:rogueflame/effects/splash_effect.dart';
 import 'package:rogueflame/objects/river.dart';
 import 'package:rogueflame/objects/star.dart';
+import 'package:rogueflame/objects/sword.dart';
 import '../screens/ember_quest.dart';
 import '../objects/ground_block.dart';
 import '../objects/platform_block.dart';
@@ -66,6 +67,10 @@ class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasG
       other.removeFromParent();
       game.starsCollected++;
       FlameAudio.play('star.wav', volume: 0.4);
+    }
+    if (other is Sword) {
+      other.removeFromParent();
+      FlameAudio.play('star.wav', volume: 0.7);
     }
     if (other is WaterEnemy && !hitByEnemy){
       hit();

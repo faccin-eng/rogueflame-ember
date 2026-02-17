@@ -1,4 +1,5 @@
 import 'package:flame/components.dart';
+import 'package:rogueflame/objects/sword.dart';
 
 import '../actors/water_enemy.dart';
 import '../objects/ground_block.dart';
@@ -55,7 +56,7 @@ final segment1 = [
   Block(Vector2(3, 6), PlatformBlock),
   Block(Vector2(6, 5), PlatformBlock),
   Block(Vector2(7, 5), PlatformBlock),
-  Block(Vector2(7, 7), Star),
+  Block(Vector2(7, 7), Sword),
   Block(Vector2(8, 0), GroundBlock),
   Block(Vector2(8, 1), PlatformBlock),
   Block(Vector2(8, 5), PlatformBlock),

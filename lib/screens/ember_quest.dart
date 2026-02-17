@@ -6,6 +6,7 @@ import 'package:flame/parallax.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:rogueflame/objects/river.dart';
+import 'package:rogueflame/objects/sword.dart';
 import 'package:rogueflame/overlays/hud.dart';
 import '../actors/ember.dart';
 import '../actors/water_enemy.dart';
@@ -80,6 +81,13 @@ class EmberQuestGame extends FlameGame with HasCollisionDetection {
               xOffset: xPositionOffset,
             ),
           );
+        case Sword:
+          world.add(
+            Sword(
+              gridPosition: block.gridPosition, 
+              xOffset: xPositionOffset,
+            ),
+          );
         case WaterEnemy:
         world.add(
           WaterEnemy(
@@ -120,6 +128,8 @@ class EmberQuestGame extends FlameGame with HasCollisionDetection {
       'heart_half.png',
       'heart.png',
       'star.png',
+      'sword.png',
+      'swording.png',
       'river.png',
       'coin.png',
       'monster.png',
