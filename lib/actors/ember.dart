@@ -2,6 +2,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame_audio/flame_audio.dart';
+import 'package:rogueflame/actors/sword_attack.dart';
 import 'package:rogueflame/actors/water_enemy.dart';
 import 'package:rogueflame/effects/splash_effect.dart';
 import 'package:rogueflame/objects/river.dart';
@@ -69,7 +70,7 @@ class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasG
     if (!hasSword || isAttacking) return;
     isAttacking = true;
 
-    final swordAnim = SpriteAnimationComponent(
+    final swordAnim = SwordAttack(
       animation: SpriteAnimation.fromFrameData(
         game.images.fromCache('swording.png'),
         SpriteAnimationData.sequenced(
@@ -83,7 +84,7 @@ class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasG
         size: Vector2(140, 108),
         anchor: Anchor.center,
         position: Vector2(48, 32),
-        removeOnFinish: true, //really? maybe not
+        // removeOnFinish: true, //can it keep the sword pointed?
     );
     add(swordAnim);
     Future.delayed(const Duration(milliseconds: 960), () {

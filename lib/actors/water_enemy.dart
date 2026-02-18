@@ -7,8 +7,10 @@ import '../screens/ember_quest.dart';
 class WaterEnemy extends SpriteAnimationComponent with CollisionCallbacks, HasGameReference<EmberQuestGame>{
   final Vector2 gridPosition;
   double xOffset;
-
   final Vector2 velocity = Vector2.zero();
+
+  int health = 2;
+  bool isHurt = false;
 
   WaterEnemy({
     required this.gridPosition,
@@ -57,6 +59,37 @@ class WaterEnemy extends SpriteAnimationComponent with CollisionCallbacks, HasGa
       }
     }
     super.onCollision(intersectionPoints, other);
+  }
+
+  void takeHit(){
+    if (isHurt) return;
+    isHurt = true;
+    health--; 
+    
+    if (health <= 0){
+      add(
+        OpacityEffect.fadeOut(
+          EffectController(
+          alternate: true,
+          duration: 0.01,
+          repeatCount: 3,
+          ),
+        ),
+      );
+      removeFromParent();
+    } else {
+      add(
+        OpacityEffect.fadeOut(
+          EffectController(
+          alternate: true,
+          duration: 0.1,
+          repeatCount: 3,
+          ),
+        )..onComplete = () {
+          isHurt = false;
+        }
+      );
+    }
   }
 
   @override
