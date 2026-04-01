@@ -8,8 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:rogueflame/objects/river.dart';
 import 'package:rogueflame/objects/sword.dart';
 import 'package:rogueflame/overlays/hud.dart';
+import 'package:rogueflame/overlays/boss_health_bar.dart';
 import '../actors/ember.dart';
 import '../actors/water_enemy.dart';
+import '../actors/frog_boss.dart';
+
 import '../objects/ground_block.dart';
 import '../objects/platform_block.dart';
 import '../objects/star.dart';
@@ -25,6 +28,13 @@ class EmberQuestGame extends FlameGame with HasCollisionDetection {
 
   int starsCollected = 0;
   int health = 3;
+
+  bool bossActive = false;
+  bool bossDefeated = false;
+  bool bossSegmentLoaded = false;
+  int segmentsLoaded = 0;   // incremented in loadGameSegments
+  int bossHealth = 10;
+  final int bossMaxHealth = 10;
 
   VoidCallback? onGameOver;
 
@@ -54,40 +64,46 @@ class EmberQuestGame extends FlameGame with HasCollisionDetection {
     starsCollected = 0;
     health = 3;
     swordSpawned = false;
+    bossActive = false;
+    bossDefeated = false;
+    bossSegmentLoaded = false;
+    segmentsLoaded = 0;
+    bossHealth = bossMaxHealth;
     world.removeAll(world.children.toList());
     initializeGame(false);
   }
 
   void loadGameSegments(int segmentIndex, double xPositionOffset){
+    segmentsLoaded++;
     for (final block in segments[segmentIndex]) {
       switch (block.blockType){
         case GroundBlock:
-          world.add(GroundBlock(gridPosition: block.gridPosition, 
+          world.add(GroundBlock(gridPosition: block.gridPosition,
             xOffset: xPositionOffset,
             ),
           );
         case River:
-          world.add(River(gridPosition: block.gridPosition, 
+          world.add(River(gridPosition: block.gridPosition,
             xOffset: xPositionOffset,
             ),
           );
         case PlatformBlock:
           world.add(PlatformBlock(
-            gridPosition: block.gridPosition, 
+            gridPosition: block.gridPosition,
             xOffset: xPositionOffset,
             ),
           );
         case Star:
           world.add(
             Star(
-              gridPosition: block.gridPosition, 
+              gridPosition: block.gridPosition,
               xOffset: xPositionOffset,
             ),
           );
         case Sword:
          if (!swordSpawned) { world.add(
             Sword(
-              gridPosition: block.gridPosition, 
+              gridPosition: block.gridPosition,
               xOffset: xPositionOffset,
             ),
           );
@@ -96,10 +112,18 @@ class EmberQuestGame extends FlameGame with HasCollisionDetection {
         case WaterEnemy:
         world.add(
           WaterEnemy(
-            gridPosition: block.gridPosition, 
+            gridPosition: block.gridPosition,
             xOffset: xPositionOffset,
           ),
         );
+        case BossBlock:
+          final boss = FrogBoss(
+            gridPosition: block.gridPosition,
+            xOffset: xPositionOffset,
+          );
+          world.add(boss);
+          bossActive = true;
+          camera.viewport.add(BossHealthBar());
       }
     }
   }
@@ -138,6 +162,12 @@ class EmberQuestGame extends FlameGame with HasCollisionDetection {
       'river.png',
       'coin.png',
       'monster.png',
+      'bosses/frog/frogger_idle.png',
+      'bosses/frog/frogger_move.png',
+      'bosses/frog/frogger_hurt.png',
+      'bosses/frog/frogger_heal.png',
+      'bosses/frog/frogger_spit.png',
+      'bosses/frog/frogger_tongue.png',
     ]);
     await FlameAudio.audioCache.load('great_dawn.mp3');
     await FlameAudio.audioCache.load('hit.wav');

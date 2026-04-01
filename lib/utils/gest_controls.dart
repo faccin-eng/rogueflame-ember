@@ -6,6 +6,8 @@ class GestControls extends StatefulWidget{
   final VoidCallback onRightPressed;
   final VoidCallback onRightReleased;
   final VoidCallback onJump;
+  final VoidCallback onDownPressed;
+  final VoidCallback onDownReleased;
 
   const GestControls({
     super.key,
@@ -14,6 +16,8 @@ class GestControls extends StatefulWidget{
     required this.onRightPressed,
     required this.onRightReleased,
     required this.onJump,
+    required this.onDownPressed,
+    required this.onDownReleased,
   });
 
   @override
@@ -49,6 +53,9 @@ class _GestControlsState extends State<GestControls> {
           if (deltaY < -30){
             widget.onJump();
             _startY = null;
+          } else if (deltaY > 30) {
+            widget.onDownPressed();
+            _startY = null;
           }
         }
       },
@@ -63,6 +70,7 @@ class _GestControlsState extends State<GestControls> {
           _isRightPressed = false;
           widget.onRightReleased();
         }
+        widget.onDownReleased();
       },
       child: Container(
         color: Colors.transparent,

@@ -9,17 +9,22 @@ class GamepadControls {
   final VoidCallback onLeftReleased;
   final VoidCallback onRightPressed;
   final VoidCallback onRightReleased;
+  final VoidCallback onDownPressed;
+  final VoidCallback onDownReleased;
   final VoidCallback onJump;
   final VoidCallback onAttack;
 
   StreamSubscription<NormalizedGamepadEvent>? _subscription;
   int _lastHorizontal = 0;
+  bool _isDownPressed = false;
 
   GamepadControls({
     required this.onLeftPressed,
     required this.onLeftReleased,
     required this.onRightPressed,
     required this.onRightReleased,
+    required this.onDownPressed,
+    required this.onDownReleased,
     required this.onJump,
     required this.onAttack,
   });
@@ -32,6 +37,7 @@ class GamepadControls {
     _subscription?.cancel();
     _subscription = null;
     _lastHorizontal = 0;
+    _applyDown(false);
   }
 
   void _handleEvent(NormalizedGamepadEvent event) {
@@ -57,8 +63,11 @@ class GamepadControls {
       _applyHorizontal(event.value > 0.5 ? 1 : 0);
       return;
     }
+    if (event.button == GamepadButton.dpadDown) {
+      _applyDown(event.value > 0.5);
+      return;
+    }
 
-    // Analógico esquerdo (eixo X): -1.0 (esquerda) a 1.0 (direita)
     if (event.axis == GamepadAxis.leftStickX) {
       final v = event.value;
       if (v < -_kAxisDeadzone) {
@@ -67,6 +76,15 @@ class GamepadControls {
         _applyHorizontal(1);
       } else {
         _applyHorizontal(0);
+      }
+      return;
+    }
+
+    if (event.axis == GamepadAxis.leftStickY) {
+      final v = event.value;
+      _applyDown(v > _kAxisDeadzone);
+      if (v < -_kAxisDeadzone) {
+        onJump();
       }
     }
   }
@@ -80,6 +98,16 @@ class GamepadControls {
       onRightPressed();
     } else {
       onLeftReleased();
+    }
+  }
+
+  void _applyDown(bool isPressed) {
+    if (isPressed == _isDownPressed) return;
+    _isDownPressed = isPressed;
+    if (isPressed) {
+      onDownPressed();
+    } else {
+      onDownReleased();
     }
   }
 }

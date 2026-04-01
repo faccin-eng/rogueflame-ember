@@ -35,6 +35,8 @@ class _GameScreenState extends State<GameScreen>{
       onLeftReleased:  () => _game.ember?.stopMoving(),
       onRightPressed:  () => _game.ember?.moveRight(),
       onRightReleased: () => _game.ember?.stopMoving(),
+      onDownPressed:   () => _game.ember?.startDescending(),
+      onDownReleased:  () => _game.ember?.stopDescending(),
       onJump:          () => _game.ember?.jump(),
       onAttack:        () => _game.ember?.attack(),
     );
@@ -72,6 +74,8 @@ class _GameScreenState extends State<GameScreen>{
               onLeftReleased: () => _game.ember?.stopMoving(),
               onRightPressed: () => _game.ember?.moveRight(),
               onRightReleased: () => _game.ember?.stopMoving(),
+              onDownPressed: () => _game.ember?.startDescending(),
+              onDownReleased: () => _game.ember?.stopDescending(),
               onJump: () => _game.ember?.jump(),
               onAttack: () => _game.ember?.attack(),
             ),
@@ -82,10 +86,11 @@ class _GameScreenState extends State<GameScreen>{
               onRightPressed: () => _game.ember?.moveRight(),
               onRightReleased: () => _game.ember?.stopMoving(),
               onJump: () => _game.ember?.jump(),
+              onDownPressed: () => _game.ember?.startDescending(),
+              onDownReleased: () => _game.ember?.stopDescending(),
             ),
         ],
       )
     );
   }
 }
-

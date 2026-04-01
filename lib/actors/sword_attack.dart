@@ -1,6 +1,7 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import '../actors/water_enemy.dart';
+import '../actors/frog_boss.dart';
 
 class SwordAttack extends SpriteAnimationComponent with CollisionCallbacks{
   SwordAttack({
@@ -20,6 +21,9 @@ class SwordAttack extends SpriteAnimationComponent with CollisionCallbacks{
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other){
     if (other is WaterEnemy){
+      other.takeHit();
+    }
+    if (other is FrogBoss){
       other.takeHit();
     }
     super.onCollision(intersectionPoints, other);

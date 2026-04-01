@@ -23,9 +23,12 @@ class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasG
    bool isOnGround = false;
 
    bool hasJumped = false;
+   bool isDescending = false;
    final double gravity = 960;
    final double jumpSpeed = 600;
+   final double descendSpeed = 320;
    final double terminalVelocity = 150;
+   final double descendTerminalVelocity = 420;
 
    bool hitByEnemy = false;
 
@@ -43,6 +46,13 @@ class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasG
   }
   void jump(){
     hasJumped = true;
+  }
+  void startDescending() {
+    if (isOnGround) return;
+    isDescending = true;
+  }
+  void stopDescending() {
+    isDescending = false;
   }
 
   void hit(){
@@ -120,6 +130,7 @@ class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasG
 
         if (fromAbove.dot(collisionNormal) > 0.9){
           isOnGround = true;
+          isDescending = false;
 
         }
         position += collisionNormal.scaled(separationDistance);
@@ -139,7 +150,12 @@ class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasG
       }
       hasJumped = false;
     }
-      velocity.y = velocity.y.clamp(-jumpSpeed, terminalVelocity);
+    final maxFallSpeed =
+        isDescending && !isOnGround ? descendTerminalVelocity : terminalVelocity;
+    velocity.y = velocity.y.clamp(-jumpSpeed, maxFallSpeed);
+    if (isDescending && !isOnGround && velocity.y < descendSpeed) {
+      velocity.y = descendSpeed;
+    }
 
     velocity.x = horizontalDirection * moveSpeed;
     

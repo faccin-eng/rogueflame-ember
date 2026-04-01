@@ -13,6 +13,8 @@ class Block {
 
 }
 
+class BossBlock {}
+
 final segments = [
   segment0,
   segment1,
@@ -258,4 +260,19 @@ final segment11 = [
   Block(Vector2(8, 2), PlatformBlock),
   Block(Vector2(8, 0), GroundBlock),
   Block(Vector2(9, 0), GroundBlock),
+];
+
+// Boss arena - flat ground with Frog King
+final segmentBoss = [
+  Block(Vector2(0, 0), GroundBlock),
+  Block(Vector2(1, 0), GroundBlock),
+  Block(Vector2(2, 0), GroundBlock),
+  Block(Vector2(3, 0), GroundBlock),
+  Block(Vector2(4, 0), GroundBlock),
+  Block(Vector2(5, 0), GroundBlock),
+  Block(Vector2(6, 0), GroundBlock),
+  Block(Vector2(7, 0), GroundBlock),
+  Block(Vector2(8, 0), GroundBlock),
+  Block(Vector2(9, 0), GroundBlock),
+  Block(Vector2(5, 1), BossBlock),  // spawns the boss
 ];
