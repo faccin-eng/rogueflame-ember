@@ -72,7 +72,7 @@ class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasG
       animation: SpriteAnimation.fromFrameData(
         game.images.fromCache('swording.png'),
         SpriteAnimationData.sequenced(
-          amount: 8,
+          amount: 4,
           stepTime: 0.12,
           textureSize: Vector2.all(32),
           amountPerRow: 4,
@@ -81,8 +81,7 @@ class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasG
         ),
         size: Vector2(140, 108),
         anchor: Anchor.center,
-        position: Vector2(48, 32),
-        // removeOnFinish: true, //can it keep the sword pointed?
+        position: Vector2(48, 50),
     );
     add(swordAnim);
     Future.delayed(const Duration(milliseconds: 960), () {
@@ -90,7 +89,8 @@ class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasG
     });
     
   }
-
+/*
+*/
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other){
     if (other is Star) {

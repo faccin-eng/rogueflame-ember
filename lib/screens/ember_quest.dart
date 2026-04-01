@@ -54,6 +54,7 @@ class EmberQuestGame extends FlameGame with HasCollisionDetection {
     starsCollected = 0;
     health = 3;
     swordSpawned = false;
+    world.removeAll(world.children.toList());
     initializeGame(false);
   }
 
