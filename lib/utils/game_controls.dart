@@ -91,7 +91,11 @@ class GameControls extends StatelessWidget {
                 color: Colors.redAccent,
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.sports_martial_arts, size: 40, color: Colors.white),
+              child: const Text( '⚔️',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 50),
+            ),
             ),
           ),
         ),

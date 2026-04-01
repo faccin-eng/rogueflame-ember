@@ -22,8 +22,8 @@ class WaterEnemy extends SpriteAnimationComponent with CollisionCallbacks, HasGa
     animation = SpriteAnimation.fromFrameData(
       game.images.fromCache('monster.png'),
       SpriteAnimationData.sequenced(
-        amount: 9, 
-        stepTime: 0.70,
+        amount: 6, 
+        stepTime: 1,
         textureSize: Vector2.all(48),
         amountPerRow: 3,
       ),
