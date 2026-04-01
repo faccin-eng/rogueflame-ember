@@ -26,6 +26,7 @@ class FrogBoss extends SpriteAnimationGroupComponent<BossState>
   final double patrolSpeed = 80.0;
   double _stateTimer = 0.0;
   BossState _currentAction = BossState.idle;
+  bool _actionFired = false; // prevents multi-fire within a single state window
 
   FrogBoss({
     required this.gridPosition,
@@ -139,11 +140,13 @@ class FrogBoss extends SpriteAnimationGroupComponent<BossState>
     velocity.y = velocity.y.clamp(-terminalVelocity, terminalVelocity);
     _stateTimer += dt;
 
-    // Always face the player — direct assignment avoids per-frame toggle flickering.
-    // scale.x = 1.0 → default (left), scale.x = -1.0 → flipped (right).
-    // If the sprite ends up reversed, swap the 1.0 and -1.0 here.
+    // Face the player. Sprite faces RIGHT by default (scale.x = 1.0).
+    // Use a threshold so the scale doesn't oscillate when boss and player are nearly aligned.
     final playerX = game.ember?.position.x ?? position.x;
-    scale.x = playerX > position.x ? -1.0 : 1.0;
+    final diff = playerX - position.x;
+    if (diff.abs() > 10) {
+      scale.x = diff < 0 ? -1.0 : 1.0;
+    }
 
     switch (_currentAction) {
       case BossState.idle:
@@ -158,6 +161,7 @@ class FrogBoss extends SpriteAnimationGroupComponent<BossState>
           }
           current = _currentAction;
           _stateTimer = 0.0;
+          _actionFired = false;
         }
         velocity.x = game.objectSpeed;
         break;
@@ -167,32 +171,37 @@ class FrogBoss extends SpriteAnimationGroupComponent<BossState>
           _currentAction = BossState.idle;
           current = BossState.idle;
           _stateTimer = 0.0;
+          _actionFired = false;
         } else {
-          final dir = playerX > position.x ? 1 : -1;
+          final dir = diff > 0 ? 1 : -1;
           velocity.x = game.objectSpeed + dir * patrolSpeed;
         }
         break;
 
       case BossState.spit:
-        if (_stateTimer >= 0.5 && _stateTimer < 0.6) {
+        if (_stateTimer >= 0.5 && !_actionFired) {
+          _actionFired = true;
           _spawnSpit();
         }
         if (_stateTimer >= 1.0) {
           _currentAction = BossState.idle;
           current = BossState.idle;
           _stateTimer = 0.0;
+          _actionFired = false;
         }
         velocity.x = game.objectSpeed;
         break;
 
       case BossState.tongue:
-        if (_stateTimer >= 0.5 && _stateTimer < 0.6) {
+        if (_stateTimer >= 0.5 && !_actionFired) {
+          _actionFired = true;
           _tongueAttack();
         }
         if (_stateTimer >= 1.0) {
           _currentAction = BossState.idle;
           current = BossState.idle;
           _stateTimer = 0.0;
+          _actionFired = false;
         }
         velocity.x = game.objectSpeed;
         break;

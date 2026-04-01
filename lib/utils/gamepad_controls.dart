@@ -41,9 +41,8 @@ class GamepadControls {
   }
 
   void _handleEvent(NormalizedGamepadEvent event) {
-    // Botão de pulo: A (Xbox) / Cross (PlayStation) / D-pad Up
-    if (event.button == GamepadButton.a ||
-        event.button == GamepadButton.dpadUp) {
+    // Botão de pulo: A (Xbox) / Cross (PlayStation)
+    if (event.button == GamepadButton.a) {
       if (event.value > 0.5) onJump();
       return;
     }
@@ -83,9 +82,6 @@ class GamepadControls {
     if (event.axis == GamepadAxis.leftStickY) {
       final v = event.value;
       _applyDown(v > _kAxisDeadzone);
-      if (v < -_kAxisDeadzone) {
-        onJump();
-      }
     }
   }
 

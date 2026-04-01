@@ -1,11 +1,15 @@
+import 'dart:math';
+
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:rogueflame/objects/platform_block.dart';
 import 'package:rogueflame/objects/ground_block.dart';
+import 'package:rogueflame/objects/heart_pickup.dart';
 import '../screens/ember_quest.dart';
 
 class WaterEnemy extends SpriteAnimationComponent with CollisionCallbacks, HasGameReference<EmberQuestGame>{
+  static final Random _random = Random();
   final Vector2 gridPosition;
   double xOffset;
   final Vector2 velocity = Vector2.zero();
@@ -67,6 +71,13 @@ class WaterEnemy extends SpriteAnimationComponent with CollisionCallbacks, HasGa
     health--; 
     
     if (health <= 0){
+      if (_random.nextDouble() < 0.2) {
+        game.world.add(
+          HeartPickup(
+            position: position.clone() - Vector2(0, size.y * 0.45),
+          ),
+        );
+      }
       add(
         OpacityEffect.fadeOut(
           EffectController(

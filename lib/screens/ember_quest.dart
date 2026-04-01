@@ -27,6 +27,7 @@ class EmberQuestGame extends FlameGame with HasCollisionDetection {
   double objectSpeed = 0.0;
 
   int starsCollected = 0;
+  final int maxHealth = 3;
   int health = 3;
 
   bool bossActive = false;
@@ -57,12 +58,12 @@ class EmberQuestGame extends FlameGame with HasCollisionDetection {
       Rectangle.fromLTRB(0, -(canvasSize.y * 0.5), double.infinity, canvasSize.y * 0.5),
     );
     
-    camera.viewport.add(Hud());
+    if (loadHud) camera.viewport.add(Hud());
   }
 
   void reset(){
     starsCollected = 0;
-    health = 3;
+    health = maxHealth;
     swordSpawned = false;
     bossActive = false;
     bossDefeated = false;
@@ -70,7 +71,8 @@ class EmberQuestGame extends FlameGame with HasCollisionDetection {
     segmentsLoaded = 0;
     bossHealth = bossMaxHealth;
     world.removeAll(world.children.toList());
-    initializeGame(false);
+    camera.viewport.removeAll(camera.viewport.children.toList());
+    initializeGame(true);
   }
 
   void loadGameSegments(int segmentIndex, double xPositionOffset){

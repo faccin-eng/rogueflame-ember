@@ -262,7 +262,7 @@ final segment11 = [
   Block(Vector2(9, 0), GroundBlock),
 ];
 
-// Boss arena - flat ground with Frog King
+// Boss arena - flat ground plus an overhead route to jump over the Frog Boss
 final segmentBoss = [
   Block(Vector2(0, 0), GroundBlock),
   Block(Vector2(1, 0), GroundBlock),
@@ -274,5 +274,21 @@ final segmentBoss = [
   Block(Vector2(7, 0), GroundBlock),
   Block(Vector2(8, 0), GroundBlock),
   Block(Vector2(9, 0), GroundBlock),
-  Block(Vector2(5, 1), BossBlock),  // spawns the boss
+  Block(Vector2(0, 1), PlatformBlock),
+  Block(Vector2(1, 2), PlatformBlock),
+  Block(Vector2(2, 4), PlatformBlock),
+  Block(Vector2(3, 6), PlatformBlock),
+  Block(Vector2(4, 3), PlatformBlock),
+  Block(Vector2(4, 5), PlatformBlock),
+  Block(Vector2(4, 7), PlatformBlock),
+  Block(Vector2(5, 4), PlatformBlock),
+  Block(Vector2(5, 6), PlatformBlock),
+  Block(Vector2(5, 7), PlatformBlock),
+  Block(Vector2(6, 3), PlatformBlock),
+  Block(Vector2(6, 5), PlatformBlock),
+  Block(Vector2(6, 7), PlatformBlock),
+  Block(Vector2(7, 7), PlatformBlock),
+  Block(Vector2(8, 5), PlatformBlock),
+  Block(Vector2(9, 3), PlatformBlock),
+  Block(Vector2(5, 1), BossBlock), // spawns the boss below the overhead route
 ];
