@@ -41,7 +41,6 @@ class WaterEnemy extends SpriteAnimationComponent with CollisionCallbacks, HasGa
       game.size.y - (gridPosition.y * size.y) - 30,
     );
     add(RectangleHitbox(collisionType: CollisionType.active));
-    flipHorizontally(); // alinha orientação inicial com _patrolDirection = -1
   }
 
   @override
@@ -102,6 +101,7 @@ class WaterEnemy extends SpriteAnimationComponent with CollisionCallbacks, HasGa
       _patrolDirection *= -1;
       _patrolTimer = 0.0;
       flipHorizontally();
+      animationTicker?.reset();
     }
     velocity.x = game.objectSpeed + _patrolDirection * patrolSpeed;
     position += velocity * dt;
