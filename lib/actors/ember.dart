@@ -43,8 +43,6 @@ class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasG
   }
   void jump(){
     hasJumped = true;
-    attack();
-    
   }
 
   void hit(){

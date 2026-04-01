@@ -4,6 +4,7 @@ import 'package:rogueflame/overlays/game_over.dart';
 import 'package:rogueflame/screens/ember_quest.dart';
 import 'package:rogueflame/utils/gest_controls.dart';
 import 'package:rogueflame/utils/game_controls.dart';
+import 'package:rogueflame/utils/gamepad_controls.dart';
 
 class GameScreen extends StatefulWidget {
   final bool mostrarBotoes;
@@ -16,6 +17,7 @@ class GameScreen extends StatefulWidget {
 
 class _GameScreenState extends State<GameScreen>{
   late final EmberQuestGame _game;
+  late final GamepadControls _gamepad;
   bool gameOver = false;
   VoidCallback? onGameOver;
 
@@ -28,10 +30,20 @@ class _GameScreenState extends State<GameScreen>{
         gameOver = true;
       });
     };
+    _gamepad = GamepadControls(
+      onLeftPressed:   () => _game.ember?.moveLeft(),
+      onLeftReleased:  () => _game.ember?.stopMoving(),
+      onRightPressed:  () => _game.ember?.moveRight(),
+      onRightReleased: () => _game.ember?.stopMoving(),
+      onJump:          () => _game.ember?.jump(),
+      onAttack:        () => _game.ember?.attack(),
+    );
+    _gamepad.attach();
   }
 
   @override
   void dispose() {
+    _gamepad.dispose();
     _game.onGameOver = null;
     super.dispose();
   }
@@ -61,6 +73,7 @@ class _GameScreenState extends State<GameScreen>{
               onRightPressed: () => _game.ember?.moveRight(),
               onRightReleased: () => _game.ember?.stopMoving(),
               onJump: () => _game.ember?.jump(),
+              onAttack: () => _game.ember?.attack(),
             ),
           if (!gameOver && !widget.mostrarBotoes)
             GestControls(

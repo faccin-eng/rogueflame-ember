@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dart:*)",
+      "Bash(flutter:*)",
+      "Bash(pub:*)",
+      "Bash(fvm:*)",
+      "Bash(*)"
+    ],
+    "defaultMode": "acceptEdits"
+  }
+}

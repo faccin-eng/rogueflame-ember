@@ -7,6 +7,7 @@ class GameControls extends StatelessWidget {
   final VoidCallback onRightPressed;
   final VoidCallback onRightReleased;
   final VoidCallback onJump;
+  final VoidCallback onAttack;
 
   const GameControls({
     super.key,
@@ -15,6 +16,7 @@ class GameControls extends StatelessWidget {
     required this.onRightPressed,
     required this.onRightReleased,
     required this.onJump,
+    required this.onAttack,
   });
 
   @override
@@ -62,17 +64,34 @@ class GameControls extends StatelessWidget {
         // Botão pular
         Positioned(
           bottom: 40,
-          right: 50,
+          right: 140,
           child: GestureDetector(
             onTap: onJump,
             child: Container(
               width: 70,
               height: 70,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white38,
                 shape: BoxShape.circle,
               ),
               child: const Icon(Icons.arrow_upward, size: 40, color: Colors.white),
+            ),
+          ),
+        ),
+        // Botão ataque
+        Positioned(
+          bottom: 40,
+          right: 50,
+          child: GestureDetector(
+            onTap: onAttack,
+            child: Container(
+              width: 70,
+              height: 70,
+              decoration: const BoxDecoration(
+                color: Colors.redAccent,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(Icons.sports_martial_arts, size: 40, color: Colors.white),
             ),
           ),
         ),
