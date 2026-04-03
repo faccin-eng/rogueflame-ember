@@ -1,11 +1,24 @@
 {
   "permissions": {
     "allow": [
-      "Bash(dart:*)",
-      "Bash(flutter:*)",
-      "Bash(pub:*)",
-      "Bash(fvm:*)",
-      "Bash(*)"
+      "Bash(flutter analyze lib/)",
+      "Bash(dart analyze lib/screens/home.dart lib/screens/login.dart lib/screens/register.dart)",
+      "Bash(dart analyze lib/screens/production.dart lib/models/sector.dart lib/database/backup_service.dart)",
+      "Bash(flutter pub get)",
+      "Bash(sed -i '/^import .dart:io.;/d;:*)",
+      "Bash(sed -i \"s|import ''../database/db_helper.dart'';|import ''../database/repository.dart'';\\\\nimport ''../utils/file_saver.dart'';|\" /home/mjfaccin/dart/agrocontrol/lib/screens/pests.dart)",
+      "Bash(sed -i 's/final DatabaseHelper _dbHelper = DatabaseHelper\\\\.instance;/final _dbHelper = getRepository\\(\\);/' /home/mjfaccin/dart/agrocontrol/lib/screens/pests.dart)",
+      "Bash(git check-ignore:*)",
+      "Bash(git -C /home/mjfaccin/dart/agrocontrol show b31397d --stat)",
+      "Bash(find /home/mjfaccin/dart/agrocontrol -type f -name *notification* -o -name *notification*)",
+      "Bash(wc -l /home/mjfaccin/dart/agrocontrol/lib/screens/pests.dart /home/mjfaccin/dart/agrocontrol/lib/screens/pestsc/*.dart /home/mjfaccin/dart/agrocontrol/pubspec.yaml)",
+      "Bash(flutter analyze:*)",
+      "Bash(flutter build:*)",
+      "Bash(./gradlew :app:checkDebugAarMetadata --info)",
+      "Bash(./android/gradlew -p android :app:checkDebugAarMetadata --stacktrace)",
+      "Bash(grep \"createBovine\\\\|getBovinesBySector\\\\|updateBovine\\\\|deleteBovine\\\\|createVaccination\\\\|getVaccinationsByBovine\" /home/mjfaccin/dart/agrocontrol/lib/database/*.dart)",
+      "Bash(git -C /home/mjfaccin/dart/agrocontrol log --oneline -20)",
+      "Bash(grep -E \"\\\\.dart$\")"
     ],
     "defaultMode": "acceptEdits"
   }

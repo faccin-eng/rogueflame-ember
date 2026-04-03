@@ -31,16 +31,16 @@ class FrogBoss extends SpriteAnimationGroupComponent<BossState>
   FrogBoss({
     required this.gridPosition,
     required this.xOffset,
-  }) : super(size: Vector2.all(384), anchor: Anchor.bottomCenter);
+  }) : super(size: Vector2(256, 128), anchor: Anchor.bottomCenter);
 
   @override
   Future<void> onLoad() async {
     final idleAnim = await _loadAnimation('bosses/frog/frogger_idle.png');
     final moveAnim = await _loadAnimation('bosses/frog/frogger_move.png');
-    final spitAnim = await _loadAnimation('bosses/frog/frogger_spit.png', loop: false);
-    final tongueAnim = await _loadAnimation('bosses/frog/frogger_tongue.png', loop: false);
-    final hurtAnim = await _loadAnimation('bosses/frog/frogger_hurt.png', loop: false);
-    final healAnim = await _loadAnimation('bosses/frog/frogger_heal.png', loop: false);
+    final spitAnim = await _loadAnimation('bosses/frog/frogger_spit.png');
+    final tongueAnim = await _loadAnimation('bosses/frog/frogger_tongue.png');
+    final hurtAnim = await _loadAnimation('bosses/frog/frogger_hurt.png');
+    final healAnim = await _loadAnimation('bosses/frog/frogger_heal.png');
 
     animations = {
       BossState.idle: idleAnim,
@@ -60,20 +60,26 @@ class FrogBoss extends SpriteAnimationGroupComponent<BossState>
     add(RectangleHitbox(collisionType: CollisionType.active));
   }
 
-  Future<SpriteAnimation> _loadAnimation(String path, {bool loop = true}) async {
+  static const _animConfigs = {
+    'bosses/frog/frogger_idle.png':   (frames: 5,  fw: 72,  fh: 59,  step: 0.2,  loop: true),
+    'bosses/frog/frogger_move.png':   (frames: 8,  fw: 120, fh: 71,  step: 0.1,  loop: true),
+    'bosses/frog/frogger_spit.png':   (frames: 9,  fw: 202, fh: 62,  step: 0.1,  loop: false),
+    'bosses/frog/frogger_tongue.png': (frames: 8,  fw: 189, fh: 63,  step: 0.1,  loop: false),
+    'bosses/frog/frogger_hurt.png':   (frames: 4,  fw: 73,  fh: 61,  step: 0.1,  loop: false),
+    'bosses/frog/frogger_heal.png':   (frames: 17, fw: 87,  fh: 101, step: 0.05, loop: false),
+  };
+
+  Future<SpriteAnimation> _loadAnimation(String path) async {
+    final cfg = _animConfigs[path]!;
     final image = game.images.fromCache(path);
-    final frameCount = image.width ~/ 128;
-    double stepTime = 0.1;
-    if (path.contains('idle')) stepTime = 0.2;
-    if (path.contains('heal')) stepTime = 0.05;
     return SpriteAnimation.fromFrameData(
       image,
       SpriteAnimationData.sequenced(
-        amount: frameCount,
-        stepTime: stepTime,
-        textureSize: Vector2.all(128),
-        amountPerRow: frameCount,
-        loop: loop,
+        amount: cfg.frames,
+        stepTime: cfg.step,
+        textureSize: Vector2(cfg.fw.toDouble(), cfg.fh.toDouble()),
+        amountPerRow: cfg.frames,
+        loop: cfg.loop,
       ),
     );
   }

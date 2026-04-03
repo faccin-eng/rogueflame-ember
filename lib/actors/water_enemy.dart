@@ -71,7 +71,7 @@ class WaterEnemy extends SpriteAnimationComponent with CollisionCallbacks, HasGa
     health--; 
     
     if (health <= 0){
-      if (_random.nextDouble() < 0.2) {
+      if (_random.nextDouble() < 0.4) {
         game.world.add(
           HeartPickup(
             position: position.clone() - Vector2(0, size.y * 0.45),

@@ -141,11 +141,12 @@ class EmberPlayer extends SpriteAnimationComponent with CollisionCallbacks, HasG
 
   @override
   void update(double dt) {
+    final wasOnGround = isOnGround;
+    isOnGround = false;
     velocity.y += gravity * dt;
     if (hasJumped){
-      if (isOnGround){
+      if (wasOnGround){
         velocity.y = -jumpSpeed;
-        isOnGround = false;
         FlameAudio.play('jump.wav');
       }
       hasJumped = false;

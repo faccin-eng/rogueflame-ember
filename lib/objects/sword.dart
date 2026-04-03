@@ -22,7 +22,7 @@ class Sword extends SpriteAnimationComponent with HasGameReference<EmberQuestGam
     game.images.fromCache('sword.png'),
     SpriteAnimationData.sequenced(
       amount: 1,
-      stepTime: 0.70, 
+      stepTime: 0.50, 
       textureSize: Vector2.all(16),
       ),
       );
