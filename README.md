@@ -1,3 +1,4 @@
-# safeblock
+# Rogueflame
 
-Um novo aplicativo de blocos, só para crianças, está para chegar.
+This game uses flame engine / flutter.
+Roguelike 2d platform.
